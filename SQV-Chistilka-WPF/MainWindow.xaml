@@ -1,0 +1,521 @@
+﻿<Window x:Class="SqvChistilka.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SQV Chistilka 2" Height="720" Width="1180" MinHeight="650" MinWidth="1000"
+        Icon="Rh71D.ico"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        WindowStartupLocation="CenterScreen" FontFamily="./#Nunito, Segoe UI">
+    <Window.Resources>
+        <Color x:Key="BgColor">#080804</Color>
+        <Color x:Key="BgAltColor">#12120B</Color>
+        <Color x:Key="CardColor">#181810</Color>
+        <Color x:Key="CardHoverColor">#242415</Color>
+        <Color x:Key="AccentColor">#Eaff00</Color>
+        <Color x:Key="GoodColor">#00FFCC</Color>
+        <Color x:Key="BadColor">#FF3355</Color>
+        <Color x:Key="WarnColor">#FFAA00</Color>
+        <Color x:Key="MutedColor">#8C8C80</Color>
+        <Color x:Key="BorderColor">#33331A</Color>
+        <SolidColorBrush x:Key="BgBrush" Color="{StaticResource BgColor}"/>
+        <SolidColorBrush x:Key="BgAltBrush" Color="{StaticResource BgAltColor}"/>
+        <SolidColorBrush x:Key="CardBrush" Color="{StaticResource CardColor}"/>
+        <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}"/>
+        <SolidColorBrush x:Key="GoodBrush" Color="{StaticResource GoodColor}"/>
+        <SolidColorBrush x:Key="BadBrush" Color="{StaticResource BadColor}"/>
+        <SolidColorBrush x:Key="WarnBrush" Color="{StaticResource WarnColor}"/>
+        <SolidColorBrush x:Key="MutedBrush" Color="{StaticResource MutedColor}"/>
+        <SolidColorBrush x:Key="BorderBrush_" Color="{StaticResource BorderColor}"/>
+
+        <Style x:Key="NavBtn" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#8C8C80"/>
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="Margin" Value="10,3,10,3"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="14,0,0,0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="8" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#242415"/>
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="AccentBtn" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Padding" Value="16,9,16,9"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="8" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#CCFF00"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.45"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="GhostBtn" TargetType="Button">
+            <Setter Property="Background" Value="#181810"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Padding" Value="14,8,14,8"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#33331A"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="8" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#242415"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="NeonBar" TargetType="ProgressBar">
+            <Setter Property="Height" Value="8"/>
+            <Setter Property="Background" Value="#242415"/>
+            <Setter Property="Foreground" Value="{StaticResource AccentBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ProgressBar">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="4">
+                            <Grid>
+                                <Border x:Name="PART_Track" CornerRadius="4" Background="Transparent"/>
+                                <Border x:Name="PART_Indicator" CornerRadius="4" Background="{TemplateBinding Foreground}" HorizontalAlignment="Left"/>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="#12120B"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="RowBackground" Value="#12120B"/>
+            <Setter Property="AlternatingRowBackground" Value="#181810"/>
+            <Setter Property="GridLinesVisibility" Value="None"/>
+            <Setter Property="HeadersVisibility" Value="Column"/>
+            <Setter Property="BorderBrush" Value="#33331A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#12120B"/>
+            <Setter Property="Foreground" Value="#Eaff00"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="#12120B"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#33331A"/>
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="CaretBrush" Value="#Eaff00"/>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="Background" Value="#12120B"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#33331A"/>
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <Border Background="#12120B" BorderBrush="#33331A" BorderThickness="1" CornerRadius="6">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="30"/>
+                                    </Grid.ColumnDefinitions>
+                                    <ContentPresenter Grid.Column="0" Content="{TemplateBinding SelectionBoxItem}" Margin="10,8,0,8" VerticalAlignment="Center"/>
+                                    <ToggleButton Grid.Column="1" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Background="Transparent" BorderThickness="0" Content="▼" Foreground="#Eaff00" FontSize="10" Cursor="Hand"/>
+                                </Grid>
+                            </Border>
+                            <Popup IsOpen="{TemplateBinding IsDropDownOpen}" Placement="Bottom" AllowsTransparency="True" PopupAnimation="Fade">
+                                <Border Background="#12120B" BorderBrush="#33331A" BorderThickness="1" CornerRadius="6" MinWidth="{TemplateBinding ActualWidth}">
+                                    <StackPanel IsItemsHost="True"/>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="ComboBoxItem">
+            <Setter Property="Background" Value="#12120B"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="8"/>
+        </Style>
+    </Window.Resources>
+
+    <Border Background="{StaticResource BgBrush}" CornerRadius="12" BorderBrush="#33331A" BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" Background="{StaticResource BgAltBrush}" CornerRadius="12,12,0,0" MouseLeftButtonDown="TitleBar_MouseDown">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="⚡ SQV Chistilka 2" Foreground="{StaticResource AccentBrush}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center" Margin="15,0,0,0"/>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="0,0,10,0" VerticalAlignment="Center">
+                        <Button Content="—" Width="38" Height="28" Style="{StaticResource GhostBtn}" Click="Min_Click" Margin="3,0,0,0"/>
+                        <Button Content="🗖" Width="38" Height="28" Style="{StaticResource GhostBtn}" Click="Max_Click" Margin="3,0,0,0"/>
+                        <Button Content="✕" Width="38" Height="28" Style="{StaticResource GhostBtn}" Click="Close_Click" Margin="3,0,0,0"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Grid Grid.Row="1" Margin="14">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="220"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Background="{StaticResource BgAltBrush}" CornerRadius="12" BorderBrush="#33331A" BorderThickness="1" Margin="0,0,14,0">
+                    <DockPanel>
+                        <TextBlock Text="НАВИГАЦИЯ" Foreground="{StaticResource MutedBrush}" FontWeight="Bold" FontSize="11" Margin="20,18,0,8" DockPanel.Dock="Top"/>
+                        <StackPanel DockPanel.Dock="Top">
+                            <Button x:Name="BtnDashboard" Content="📊   Обзор" Style="{StaticResource NavBtn}" Click="Nav_Click" Tag="dashboard"/>
+                            <Button Content="🗂   Проводник" Style="{StaticResource NavBtn}" Click="Nav_Click" Tag="explorer"/>
+                            <Button Content="📈   Анализ диска" Style="{StaticResource NavBtn}" Click="Nav_Click" Tag="analysis"/>
+                            <Button Content="🧽   Очистка" Style="{StaticResource NavBtn}" Click="Nav_Click" Tag="cleaner"/>
+                            <Button Content="🚀   Автозагрузка" Style="{StaticResource NavBtn}" Click="Nav_Click" Tag="startup"/>
+                            <Button Content="💡   Советы" Style="{StaticResource NavBtn}" Click="Nav_Click" Tag="tips"/>
+                            <Button Content="🔑   Лицензия" Style="{StaticResource NavBtn}" Click="Nav_Click" Tag="license"/>
+                        </StackPanel>
+                        <Border DockPanel.Dock="Bottom" Margin="14,0,14,12" Padding="10" Background="#181810" CornerRadius="8" BorderBrush="#33331A" BorderThickness="1">
+                            <TextBlock x:Name="StatusText" Text="Система в норме" Foreground="{StaticResource MutedBrush}" FontSize="11" TextWrapping="Wrap"/>
+                        </Border>
+                    </DockPanel>
+                </Border>
+
+                <Border Grid.Column="1" Background="Transparent">
+                    <Grid x:Name="ContentHost">
+                        <Grid.RenderTransform>
+                            <TranslateTransform x:Name="ContentSlide" X="0"/>
+                        </Grid.RenderTransform>
+
+                        <!-- DASHBOARD -->
+                        <Grid x:Name="PageDashboard" Visibility="Visible">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <StackPanel>
+                                <Grid Margin="6,2,6,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="💽 Состояние дисков" Foreground="{StaticResource AccentBrush}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center"/>
+                                    <Button Grid.Column="1" Content="⚡ Быстрое сканирование" Style="{StaticResource AccentBtn}" Click="QuickScan_Click" Margin="0,0,8,0"/>
+                                    <Button Grid.Column="2" Content="🔄 Обновить" Style="{StaticResource GhostBtn}" Click="RefreshDisks_Click"/>
+                                </Grid>
+                                <ItemsControl x:Name="DisksList" Margin="6,0,6,6">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Background="{StaticResource BgAltBrush}" CornerRadius="10" BorderBrush="#33331A" BorderThickness="1" Padding="14,12,14,12" Margin="0,0,0,8">
+                                                <StackPanel>
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Grid.Column="0" Text="{Binding Device}" Foreground="White" FontWeight="Bold" FontSize="14"/>
+                                                        <TextBlock Grid.Column="1" Text="{Binding Info}" Foreground="{StaticResource AccentBrush}" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                                    </Grid>
+                                                    <ProgressBar Value="{Binding Percent}" Maximum="100" Style="{StaticResource NeonBar}" Margin="0,10,0,0"/>
+                                                </StackPanel>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                                <Border Background="{StaticResource BgAltBrush}" CornerRadius="10" BorderBrush="#33331A" BorderThickness="1" Padding="16" Margin="6,6,6,6">
+                                    <StackPanel>
+                                        <TextBlock Text="🔎 Быстрый результат сканирования" Foreground="{StaticResource AccentBrush}" FontWeight="Bold" FontSize="13"/>
+                                        <TextBlock x:Name="QuickResult" Text="Нажмите «Быстрое сканирование»." Foreground="{StaticResource MutedBrush}" TextWrapping="Wrap" Margin="0,8,0,8"/>
+                                        <ProgressBar x:Name="QuickProgress" Minimum="0" Maximum="1" Value="0" Style="{StaticResource NeonBar}"/>
+                                        <Button x:Name="QuickCleanBtn" Content="✅ Очистить сейчас" Style="{StaticResource AccentBtn}" IsEnabled="False" Margin="0,12,0,0" HorizontalAlignment="Left" Click="QuickClean_Click"/>
+                                    </StackPanel>
+                                </Border>
+                                <Border Background="{StaticResource BgAltBrush}" CornerRadius="10" BorderBrush="#33331A" BorderThickness="1" Padding="16" Margin="6,6,6,6">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock Text="📊 Всего освобождено" Foreground="{StaticResource AccentBrush}" FontWeight="Bold" FontSize="13"/>
+                                            <TextBlock x:Name="TotalFreedText" Text="0 Б" Foreground="White" FontSize="16" FontWeight="Bold" Margin="0,4,0,0"/>
+                                            <TextBlock Text="История очисток:" Foreground="{StaticResource MutedBrush}" Margin="0,10,0,4"/>
+                                            <ListBox x:Name="HistoryList" Background="Transparent" BorderThickness="0" MaxHeight="140" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                                <ListBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding}" Foreground="#8C8C80" FontSize="11" TextWrapping="Wrap"/>
+                                                    </DataTemplate>
+                                                </ListBox.ItemTemplate>
+                                            </ListBox>
+                                        </StackPanel>
+                                        <Button Grid.Column="1" Content="🔒 Создать точку восстановления" Style="{StaticResource GhostBtn}" Click="RestorePoint_Click" VerticalAlignment="Top"/>
+                                    </Grid>
+                                </Border>
+                            </StackPanel>
+                            </ScrollViewer>
+                        </Grid>
+
+                        <!-- EXPLORER -->
+                        <Grid x:Name="PageExplorer" Visibility="Collapsed">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid Margin="6,2,6,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Button Grid.Column="0" Content="⬆ Вверх" Style="{StaticResource GhostBtn}" Click="ExplorerUp_Click"/>
+                                <Button Grid.Column="1" Content="🏠" Style="{StaticResource GhostBtn}" Click="ExplorerHome_Click" Margin="6,0,0,0"/>
+                                <TextBox x:Name="ExplorerPath" Grid.Column="2" Margin="8,0,8,0" VerticalContentAlignment="Center"/>
+                                <Button Grid.Column="3" Content="Перейти →" Style="{StaticResource AccentBtn}" Click="ExplorerGo_Click"/>
+                            </Grid>
+                            <DataGrid x:Name="ExplorerGrid" Grid.Row="1" Margin="6,0,6,6" AutoGenerateColumns="False" IsReadOnly="True" MouseDoubleClick="ExplorerGrid_DblClick">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Имя" Binding="{Binding Name}" Width="*"/>
+                                    <DataGridTextColumn Header="Размер" Binding="{Binding SizeText}" Width="130"/>
+                                    <DataGridTextColumn Header="Изменён" Binding="{Binding MTime}" Width="160"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="6,0,6,6">
+                                <Button Content="🗑 Удалить выбранное" Style="{StaticResource GhostBtn}" Click="ExplorerDelete_Click" HorizontalAlignment="Left"/>
+                                <Button Content="📏 Размеры папок" Style="{StaticResource GhostBtn}" Click="ExplorerSizes_Click" Margin="8,0,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock x:Name="ExplorerInfo" Foreground="{StaticResource AccentBrush}" VerticalAlignment="Center" Margin="14,0,0,0"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- ANALYSIS -->
+                        <Grid x:Name="PageAnalysis" Visibility="Collapsed">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid Margin="6,2,6,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="200"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="📁 Папка:" Foreground="{StaticResource AccentBrush}" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                <TextBox x:Name="AnalysisPath" Grid.Column="1" Text="C:\" VerticalContentAlignment="Center" Margin="0,0,8,0"/>
+                                <ComboBox x:Name="AnalysisMode" Grid.Column="2" SelectedIndex="0" VerticalContentAlignment="Center" Padding="8">
+                                    <ComboBoxItem>Самые большие файлы</ComboBoxItem>
+                                    <ComboBoxItem>Самые большие папки</ComboBoxItem>
+                                </ComboBox>
+                            </Grid>
+                            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="6,0,6,8">
+                                <Button Content="🔍 Начать анализ" Style="{StaticResource AccentBtn}" Click="AnalysisStart_Click" HorizontalAlignment="Left"/>
+                                <Button x:Name="AnalysisStopBtn" Content="✖ Остановить" Style="{StaticResource GhostBtn}" Click="AnalysisStop_Click" IsEnabled="False" Margin="8,0,0,0" HorizontalAlignment="Left"/>
+                                <TextBlock x:Name="AnalysisStatus" Foreground="{StaticResource MutedBrush}" VerticalAlignment="Center" Margin="14,0,0,0"/>
+                            </StackPanel>
+                            <DataGrid x:Name="AnalysisGrid" Grid.Row="2" Margin="6,0,6,6" AutoGenerateColumns="False" IsReadOnly="True">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Путь" Binding="{Binding Path}" Width="*"/>
+                                    <DataGridTextColumn Header="Размер" Binding="{Binding SizeText}" Width="140"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="6,0,6,12">
+                                <Button Content="🗑 Удалить выбранное" Style="{StaticResource GhostBtn}" Click="AnalysisDelete_Click" HorizontalAlignment="Left"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- CLEANER -->
+                        <Grid x:Name="PageCleaner" Visibility="Collapsed">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/><RowDefinition Height="120"/>
+                            </Grid.RowDefinitions>
+                            <Grid Margin="6,2,6,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="🧽 Категории для очистки" Foreground="{StaticResource AccentBrush}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center"/>
+                                <Button Grid.Column="1" Content="👁 Предпросмотр" Style="{StaticResource GhostBtn}" Click="CleanerPreview_Click" Margin="0,0,6,0"/>
+                                <Button Grid.Column="2" Content="🔒 Белый список" Style="{StaticResource GhostBtn}" Click="Whitelist_Click" Margin="0,0,6,0"/>
+                                <Button Grid.Column="3" Content="📏 Проверить размер" Style="{StaticResource GhostBtn}" Click="CleanerRefresh_Click"/>
+                            </Grid>
+                            <ListBox x:Name="CleanerList" Grid.Row="1" Margin="6,0,6,6" Background="Transparent" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Background="#12120B" CornerRadius="8" BorderBrush="#33331A" BorderThickness="1" Padding="12,10,12,10" Margin="0,0,0,6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <CheckBox Grid.Column="0" IsChecked="{Binding Selected, Mode=TwoWay}" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                                                <StackPanel Grid.Column="1">
+                                                    <TextBlock Text="{Binding Name}" Foreground="White" FontSize="13"/>
+                                                    <TextBlock Text="{Binding Desc}" Foreground="#8C8C80" FontSize="11" TextWrapping="Wrap"/>
+                                                </StackPanel>
+                                                <TextBlock Grid.Column="2" Text="{Binding SizeText}" Foreground="{StaticResource AccentBrush}" VerticalAlignment="Center" Margin="12,0,0,0"/>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <Grid Grid.Row="2" Margin="6,0,6,6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock x:Name="CleanerTotal" Text="Выбрано: 0 Б" Foreground="{StaticResource WarnBrush}" VerticalAlignment="Center"/>
+                                <Button Grid.Column="1" Content="🧽 Очистить выбранное" Style="{StaticResource AccentBtn}" Click="CleanerClean_Click"/>
+                            </Grid>
+                            <TextBox x:Name="CleanerLog" Grid.Row="3" Margin="6,0,6,8" IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" AcceptsReturn="True"/>
+                        </Grid>
+
+                        <!-- STARTUP -->
+                        <Grid x:Name="PageStartup" Visibility="Collapsed">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid Margin="6,2,6,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="🚀 Программы в автозагрузке" Foreground="{StaticResource AccentBrush}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center"/>
+                                <Button Grid.Column="1" Content="🔄 Обновить" Style="{StaticResource GhostBtn}" Click="StartupRefresh_Click"/>
+                            </Grid>
+                            <DataGrid x:Name="StartupGrid" Grid.Row="1" Margin="6,0,6,6" AutoGenerateColumns="False" IsReadOnly="True">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Имя" Binding="{Binding Name}" Width="220"/>
+                                    <DataGridTextColumn Header="Команда" Binding="{Binding Command}" Width="*"/>
+                                    <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="110"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="6,0,6,8">
+                                <Button Content="⛔ Отключить" Style="{StaticResource GhostBtn}" Click="StartupDisable_Click" HorizontalAlignment="Left"/>
+                                <Button Content="✅ Включить" Style="{StaticResource GhostBtn}" Click="StartupEnable_Click" Margin="8,0,0,0" HorizontalAlignment="Left"/>
+                            </StackPanel>
+                            <CheckBox x:Name="SelfAuto" Grid.Row="3" Content="Запускать SQV Chistilka вместе с Windows" Foreground="White" Margin="10,0,0,10" Click="SelfAuto_Click"/>
+                        </Grid>
+
+                        <!-- TIPS -->
+                        <Grid x:Name="PageTips" Visibility="Collapsed">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/><RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Margin="6,2,6,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="💡 Советы по оптимизации" Foreground="{StaticResource AccentBrush}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center"/>
+                                <Button Grid.Column="1" Content="🔄 Обновить" Style="{StaticResource GhostBtn}" Click="RefreshDisks_Click"/>
+                            </Grid>
+                            <ListBox x:Name="TipsList" Grid.Row="1" Margin="6,0,6,6" Background="Transparent" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Background="#12120B" CornerRadius="8" BorderBrush="#33331A" BorderThickness="1" Padding="14,12,14,12" Margin="0,0,0,6">
+                                            <TextBlock Text="{Binding}" Foreground="White" TextWrapping="Wrap"/>
+                                        </Border>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Grid>
+
+                        <!-- LICENSE -->
+                        <Grid x:Name="PageLicense" Visibility="Collapsed">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <StackPanel Margin="6,2,6,6">
+                                <TextBlock Text="🔑 Лицензия" Foreground="{StaticResource AccentBrush}" FontWeight="Bold" FontSize="15"/>
+                                <Border Background="#12120B" CornerRadius="10" BorderBrush="#33331A" BorderThickness="1" Padding="16" Margin="0,10,0,8">
+                                    <StackPanel>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="Текущий тариф" Foreground="{StaticResource MutedBrush}"/>
+                                            <TextBlock x:Name="LicenseStatus" Grid.Column="1" Text="🟢 Free" Foreground="{StaticResource GoodBrush}" FontWeight="Bold" FontSize="14"/>
+                                        </Grid>
+                                        <TextBlock x:Name="LicenseExpiry" Text="" Foreground="{StaticResource MutedBrush}" FontSize="11" Margin="0,4,0,0"/>
+                                        <TextBlock Text="🟢 Free — базовая очистка (временные файлы, корзина, кэш браузеров)." Foreground="White" TextWrapping="Wrap" Margin="0,10,0,0"/>
+                                        <TextBlock Text="🟡 Pro — глубокая очистка, анализ диска, автозагрузка, предпросмотр, кэш Discord/Steam/Telegram, приоритетная поддержка." Foreground="White" TextWrapping="Wrap" Margin="0,4,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                                <Border Background="#12120B" CornerRadius="10" BorderBrush="#33331A" BorderThickness="1" Padding="16" Margin="0,0,0,8">
+                                    <StackPanel>
+                                        <TextBlock Text="ID этого ПК (для привязки ключа):" Foreground="{StaticResource MutedBrush}" FontSize="11"/>
+                                        <Grid Margin="0,6,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBox x:Name="HwidBox" Grid.Column="0" IsReadOnly="True" Margin="0,0,8,0"/>
+                                            <Button Grid.Column="1" Content="Копировать" Style="{StaticResource GhostBtn}" Click="HwidCopy_Click"/>
+                                        </Grid>
+                                        <TextBlock Text="Вставь Pro-ключ из бота:" Foreground="{StaticResource MutedBrush}" FontSize="11" Margin="0,12,0,0"/>
+                                        <TextBox x:Name="LicenseKeyBox" Margin="0,6,0,0" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="70" VerticalScrollBarVisibility="Auto"/>
+                                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                            <Button Content="✨ Активировать Pro" Style="{StaticResource AccentBtn}" Click="LicenseActivate_Click" HorizontalAlignment="Left"/>
+                                            <Button Content="Убрать ключ" Style="{StaticResource GhostBtn}" Click="LicenseRemove_Click" Margin="8,0,0,0" HorizontalAlignment="Left"/>
+                                        </StackPanel>
+                                        <TextBlock x:Name="LicenseMsg" Text="" TextWrapping="Wrap" Margin="0,8,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                                <Border Background="#12120B" CornerRadius="10" BorderBrush="#33331A" BorderThickness="1" Padding="16" Margin="0,0,0,8">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                            <TextBlock Text="Версия программы" Foreground="{StaticResource MutedBrush}" FontSize="11"/>
+                                            <TextBlock x:Name="AppVersionText" Text="2.1.0" Foreground="White" FontWeight="Bold" FontSize="13"/>
+                                            <TextBlock Text="© 2026 SQV. Все права защищены." Foreground="{StaticResource MutedBrush}" FontSize="10" Margin="0,2,0,0"/>
+                                        </StackPanel>
+                                        <Button Grid.Column="1" Content="🔄 Проверить обновления" Style="{StaticResource GhostBtn}" Click="CheckUpdates_Click" VerticalAlignment="Center"/>
+                                    </Grid>
+                                </Border>
+                            </StackPanel>
+                            </ScrollViewer>
+                        </Grid>
+
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

@@ -1,0 +1,16 @@
+[Unit]
+Description=SQV Chistilka Telegram bot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/sqv-bot
+EnvironmentFile=/home/ubuntu/sqv-bot/.env.systemd
+ExecStart=/home/ubuntu/sqv-bot/venv/bin/python /home/ubuntu/sqv-bot/tg_bot.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

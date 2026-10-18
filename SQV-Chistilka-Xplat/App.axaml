@@ -1,0 +1,76 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="SqvChistilka.App"
+             RequestedThemeVariant="Dark">
+    <Application.Resources>
+        <Color x:Key="BgColor">#080804</Color>
+        <Color x:Key="BgAltColor">#12120B</Color>
+        <Color x:Key="CardColor">#181810</Color>
+        <Color x:Key="AccentColor">#Eaff00</Color>
+        <Color x:Key="GoodColor">#00FFCC</Color>
+        <Color x:Key="BadColor">#FF3355</Color>
+        <Color x:Key="WarnColor">#FFAA00</Color>
+        <Color x:Key="MutedColor">#8C8C80</Color>
+        <Color x:Key="BorderColor">#33331A</Color>
+        <SolidColorBrush x:Key="BgBrush" Color="{StaticResource BgColor}"/>
+        <SolidColorBrush x:Key="BgAltBrush" Color="{StaticResource BgAltColor}"/>
+        <SolidColorBrush x:Key="CardBrush" Color="{StaticResource CardColor}"/>
+        <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}"/>
+        <SolidColorBrush x:Key="GoodBrush" Color="{StaticResource GoodColor}"/>
+        <SolidColorBrush x:Key="BadBrush" Color="{StaticResource BadColor}"/>
+        <SolidColorBrush x:Key="WarnBrush" Color="{StaticResource WarnColor}"/>
+        <SolidColorBrush x:Key="MutedBrush" Color="{StaticResource MutedColor}"/>
+    </Application.Resources>
+
+    <Application.Styles>
+        <FluentTheme />
+        <Style Selector="Button.nav">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#8C8C80"/>
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="Margin" Value="10,3,10,3"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="14,0,0,0"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style Selector="Button.nav:pointerover">
+            <Setter Property="Background" Value="#242415"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Style Selector="Button.accent">
+            <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="16,9,16,9"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style Selector="Button.ghost">
+            <Setter Property="Background" Value="#181810"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="14,8,14,8"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="BorderBrush" Value="#33331A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style Selector="ProgressBar.neon">
+            <Setter Property="Height" Value="8"/>
+            <Setter Property="Background" Value="#242415"/>
+            <Setter Property="Foreground" Value="{StaticResource AccentBrush}"/>
+            <Setter Property="CornerRadius" Value="4"/>
+        </Style>
+        <Style Selector="TextBox">
+            <Setter Property="Background" Value="#12120B"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#33331A"/>
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="CaretBrush" Value="{StaticResource AccentBrush}"/>
+        </Style>
+        <Style Selector="ListBox">
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+    </Application.Styles>
+</Application>

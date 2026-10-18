@@ -1,0 +1,322 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="SqvChistilka.MainWindow"
+        Title="SQV Chistilka 2" Width="1180" Height="720" MinWidth="1000" MinHeight="650"
+        Icon="avares://SqvChistilka/Assets/Rh71D.ico"
+        WindowStartupLocation="CenterScreen"
+        FontFamily="avares://SqvChistilka/Assets/Fonts/Nunito.ttf#Nunito"
+        Background="#080804">
+    <Border Background="{StaticResource BgBrush}" CornerRadius="12" BorderBrush="#33331A" BorderThickness="1" Margin="1">
+        <Grid RowDefinitions="*,Auto">
+            <Grid Grid.Row="0" Margin="14">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="220"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Background="{StaticResource BgAltBrush}" CornerRadius="12" BorderBrush="#33331A" BorderThickness="1" Margin="0,0,14,0">
+                    <DockPanel>
+                        <TextBlock Text="НАВИГАЦИЯ" Foreground="{StaticResource MutedBrush}" FontWeight="Bold" FontSize="11" Margin="20,18,0,8" DockPanel.Dock="Top"/>
+                        <StackPanel DockPanel.Dock="Top">
+                            <Button x:Name="BtnDashboard" Content="📊   Обзор" Classes="nav" Click="Nav_Click" Tag="dashboard"/>
+                            <Button Content="🗂   Проводник" Classes="nav" Click="Nav_Click" Tag="explorer"/>
+                            <Button Content="📈   Анализ диска" Classes="nav" Click="Nav_Click" Tag="analysis"/>
+                            <Button Content="🧽   Очистка" Classes="nav" Click="Nav_Click" Tag="cleaner"/>
+                            <Button Content="🚀   Автозагрузка" Classes="nav" Click="Nav_Click" Tag="startup"/>
+                            <Button Content="💡   Советы" Classes="nav" Click="Nav_Click" Tag="tips"/>
+                            <Button Content="🔑   Лицензия" Classes="nav" Click="Nav_Click" Tag="license"/>
+                        </StackPanel>
+                        <Border DockPanel.Dock="Bottom" Margin="14,0,14,12" Padding="10" Background="#181810" CornerRadius="8" BorderBrush="#33331A" BorderThickness="1">
+                            <TextBlock x:Name="StatusText" Text="Система в норме" Foreground="{StaticResource MutedBrush}" FontSize="11" TextWrapping="Wrap"/>
+                        </Border>
+                    </DockPanel>
+                </Border>
+
+                <Border Grid.Column="1" Background="Transparent">
+                    <Grid x:Name="ContentHost">
+
+                        <!-- DASHBOARD -->
+                        <Grid x:Name="PageDashboard" IsVisible="True">
+                            <ScrollViewer>
+                            <StackPanel>
+                                <Grid Margin="6,2,6,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="💽 Состояние дисков" Foreground="{StaticResource AccentBrush}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center"/>
+                                    <Button Grid.Column="1" Content="⚡ Быстрое сканирование" Classes="accent" Click="QuickScan_Click" Margin="0,0,8,0"/>
+                                    <Button Grid.Column="2" Content="🔄 Обновить" Classes="ghost" Click="RefreshDisks_Click"/>
+                                </Grid>
+                                <ItemsControl x:Name="DisksList" Margin="6,0,6,6">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Background="{StaticResource BgAltBrush}" CornerRadius="10" BorderBrush="#33331A" BorderThickness="1" Padding="14,12,14,12" Margin="0,0,0,8">
+                                                <StackPanel>
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Grid.Column="0" Text="{Binding Device}" Foreground="White" FontWeight="Bold" FontSize="14"/>
+                                                        <TextBlock Grid.Column="1" Text="{Binding Info}" Foreground="{StaticResource AccentBrush}" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                                    </Grid>
+                                                    <ProgressBar Value="{Binding Percent}" Maximum="100" Classes="neon" Margin="0,10,0,0"/>
+                                                </StackPanel>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                                <Border Background="{StaticResource BgAltBrush}" CornerRadius="10" BorderBrush="#33331A" BorderThickness="1" Padding="16" Margin="6,6,6,6">
+                                    <StackPanel>
+                                        <TextBlock Text="🔎 Быстрый результат сканирования" Foreground="{StaticResource AccentBrush}" FontWeight="Bold" FontSize="13"/>
+                                        <TextBlock x:Name="QuickResult" Text="Нажмите «Быстрое сканирование»." Foreground="{StaticResource MutedBrush}" TextWrapping="Wrap" Margin="0,8,0,8"/>
+                                        <ProgressBar x:Name="QuickProgress" Minimum="0" Maximum="1" Value="0" Classes="neon"/>
+                                        <Button x:Name="QuickCleanBtn" Content="✅ Очистить сейчас" Classes="accent" IsEnabled="False" Margin="0,12,0,0" HorizontalAlignment="Left" Click="QuickClean_Click"/>
+                                    </StackPanel>
+                                </Border>
+                                <Border Background="{StaticResource BgAltBrush}" CornerRadius="10" BorderBrush="#33331A" BorderThickness="1" Padding="16" Margin="6,6,6,6">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock Text="📊 Всего освобождено" Foreground="{StaticResource AccentBrush}" FontWeight="Bold" FontSize="13"/>
+                                            <TextBlock x:Name="TotalFreedText" Text="0 Б" Foreground="White" FontSize="16" FontWeight="Bold" Margin="0,4,0,0"/>
+                                            <TextBlock Text="История очисток:" Foreground="{StaticResource MutedBrush}" Margin="0,10,0,4"/>
+                                            <ListBox x:Name="HistoryList" MaxHeight="140"/>
+                                        </StackPanel>
+                                        <Button Grid.Column="1" Content="🔒 Точка восстановления" Classes="ghost" Click="RestorePoint_Click" VerticalAlignment="Top"/>
+                                    </Grid>
+                                </Border>
+                            </StackPanel>
+                            </ScrollViewer>
+                        </Grid>
+
+                        <!-- EXPLORER -->
+                        <Grid x:Name="PageExplorer" IsVisible="False">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid Margin="6,2,6,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Button Grid.Column="0" Content="⬆ Вверх" Classes="ghost" Click="ExplorerUp_Click"/>
+                                <Button Grid.Column="1" Content="🏠" Classes="ghost" Click="ExplorerHome_Click" Margin="6,0,0,0"/>
+                                <TextBox x:Name="ExplorerPath" Grid.Column="2" Margin="8,0,8,0" VerticalContentAlignment="Center"/>
+                                <Button Grid.Column="3" Content="📂" Classes="ghost" Click="ExplorerBrowse_Click" Margin="0,0,8,0"/>
+                                <Button Grid.Column="4" Content="Перейти →" Classes="accent" Click="ExplorerGo_Click"/>
+                            </Grid>
+                            <ListBox x:Name="ExplorerGrid" Grid.Row="1" Margin="6,0,6,6" SelectionMode="Multiple" DoubleTapped="ExplorerGrid_DblTap">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="4">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/><ColumnDefinition Width="130"/><ColumnDefinition Width="150"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding Name}" Foreground="White"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding SizeText}" Foreground="{StaticResource MutedBrush}"/>
+                                            <TextBlock Grid.Column="2" Text="{Binding MTime}" Foreground="{StaticResource MutedBrush}"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="6,0,6,6" Spacing="8">
+                                <Button Content="🗑 Удалить выбранное" Classes="ghost" Click="ExplorerDelete_Click"/>
+                                <Button Content="📏 Размеры папок" Classes="ghost" Click="ExplorerSizes_Click"/>
+                                <TextBlock x:Name="ExplorerInfo" Foreground="{StaticResource AccentBrush}" VerticalAlignment="Center" Margin="6,0,0,0"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- ANALYSIS -->
+                        <Grid x:Name="PageAnalysis" IsVisible="False">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid Margin="6,2,6,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="📁 Папка:" Foreground="{StaticResource AccentBrush}" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                <TextBox x:Name="AnalysisPath" Grid.Column="1" Text="/" VerticalContentAlignment="Center" Margin="0,0,8,0"/>
+                                <Button Grid.Column="2" Content="📂" Classes="ghost" Click="AnalysisBrowse_Click" Margin="0,0,8,0"/>
+                                <RadioButton x:Name="ModeFiles" Grid.Column="3" Content="Файлы" IsChecked="True" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                <RadioButton x:Name="ModeFolders" Grid.Column="4" Content="Папки" VerticalAlignment="Center"/>
+                            </Grid>
+                            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="6,0,6,8" Spacing="8">
+                                <Button Content="🔍 Начать анализ" Classes="accent" Click="AnalysisStart_Click"/>
+                                <Button x:Name="AnalysisStopBtn" Content="✖ Остановить" Classes="ghost" Click="AnalysisStop_Click" IsEnabled="False"/>
+                                <TextBlock x:Name="AnalysisStatus" Foreground="{StaticResource MutedBrush}" VerticalAlignment="Center" Margin="6,0,0,0"/>
+                            </StackPanel>
+                            <ListBox x:Name="AnalysisGrid" Grid.Row="2" Margin="6,0,6,6" SelectionMode="Multiple">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="4">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/><ColumnDefinition Width="140"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding Path}" Foreground="White"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding SizeText}" Foreground="{StaticResource AccentBrush}" HorizontalAlignment="Right"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="6,0,6,12">
+                                <Button Content="🗑 Удалить выбранное" Classes="ghost" Click="AnalysisDelete_Click"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- CLEANER -->
+                        <Grid x:Name="PageCleaner" IsVisible="False">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/><RowDefinition Height="120"/>
+                            </Grid.RowDefinitions>
+                            <Grid Margin="6,2,6,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="🧽 Категории для очистки" Foreground="{StaticResource AccentBrush}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center"/>
+                                <Button Grid.Column="1" Content="👁 Предпросмотр" Classes="ghost" Click="CleanerPreview_Click" Margin="0,0,6,0"/>
+                                <Button Grid.Column="2" Content="🔒 Белый список" Classes="ghost" Click="Whitelist_Click" Margin="0,0,6,0"/>
+                                <Button Grid.Column="3" Content="📏 Проверить размер" Classes="ghost" Click="CleanerRefresh_Click"/>
+                            </Grid>
+                            <ListBox x:Name="CleanerList" Grid.Row="1" Margin="6,0,6,6">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Background="#12120B" CornerRadius="8" BorderBrush="#33331A" BorderThickness="1" Padding="12,10,12,10" Margin="0,0,0,6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <CheckBox Grid.Column="0" IsChecked="{Binding Selected, Mode=TwoWay}" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                                                <StackPanel Grid.Column="1">
+                                                    <TextBlock Text="{Binding Name}" Foreground="White" FontSize="13"/>
+                                                    <TextBlock Text="{Binding Desc}" Foreground="#8C8C80" FontSize="11" TextWrapping="Wrap"/>
+                                                </StackPanel>
+                                                <TextBlock Grid.Column="2" Text="{Binding SizeText}" Foreground="{StaticResource AccentBrush}" VerticalAlignment="Center" Margin="12,0,0,0"/>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <Grid Grid.Row="2" Margin="6,0,6,6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock x:Name="CleanerTotal" Text="Выбрано: 0 Б" Foreground="{StaticResource WarnBrush}" VerticalAlignment="Center"/>
+                                <Button Grid.Column="1" Content="🧽 Очистить выбранное" Classes="accent" Click="CleanerClean_Click"/>
+                            </Grid>
+                            <TextBox x:Name="CleanerLog" Grid.Row="3" Margin="6,0,6,8" IsReadOnly="True" TextWrapping="Wrap" AcceptsReturn="True"/>
+                        </Grid>
+
+                        <!-- STARTUP -->
+                        <Grid x:Name="PageStartup" IsVisible="False">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid Margin="6,2,6,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="🚀 Программы в автозагрузке" Foreground="{StaticResource AccentBrush}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center"/>
+                                <Button Grid.Column="1" Content="🔄 Обновить" Classes="ghost" Click="StartupRefresh_Click"/>
+                            </Grid>
+                            <ListBox x:Name="StartupGrid" Grid.Row="1" Margin="6,0,6,6" SelectionMode="Multiple">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="4">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="220"/><ColumnDefinition Width="*"/><ColumnDefinition Width="110"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding Name}" Foreground="White"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding Command}" Foreground="{StaticResource MutedBrush}" TextTrimming="CharacterEllipsis"/>
+                                            <TextBlock Grid.Column="2" Text="{Binding Status}" Foreground="{StaticResource AccentBrush}" HorizontalAlignment="Center"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="6,0,6,8" Spacing="8">
+                                <Button Content="⛔ Отключить" Classes="ghost" Click="StartupDisable_Click"/>
+                                <Button Content="✅ Включить" Classes="ghost" Click="StartupEnable_Click"/>
+                            </StackPanel>
+                            <CheckBox x:Name="SelfAuto" Grid.Row="3" Content="Запускать SQV Chistilka вместе с системой" Foreground="White" Margin="10,0,0,10" Click="SelfAuto_Click"/>
+                        </Grid>
+
+                        <!-- TIPS -->
+                        <Grid x:Name="PageTips" IsVisible="False">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/><RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Margin="6,2,6,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="💡 Советы по оптимизации" Foreground="{StaticResource AccentBrush}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center"/>
+                                <Button Grid.Column="1" Content="🔄 Обновить" Classes="ghost" Click="RefreshDisks_Click"/>
+                            </Grid>
+                            <ListBox x:Name="TipsList" Grid.Row="1" Margin="6,0,6,6">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Background="#12120B" CornerRadius="8" BorderBrush="#33331A" BorderThickness="1" Padding="14,12,14,12" Margin="0,0,0,6">
+                                            <TextBlock Text="{Binding}" Foreground="White" TextWrapping="Wrap"/>
+                                        </Border>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Grid>
+
+                        <!-- LICENSE -->
+                        <Grid x:Name="PageLicense" IsVisible="False">
+                            <ScrollViewer>
+                            <StackPanel Margin="6,2,6,6">
+                                <TextBlock Text="🔑 Лицензия" Foreground="{StaticResource AccentBrush}" FontWeight="Bold" FontSize="15"/>
+                                <Border Background="#12120B" CornerRadius="10" BorderBrush="#33331A" BorderThickness="1" Padding="16" Margin="0,10,0,8">
+                                    <StackPanel>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="Текущий тариф" Foreground="{StaticResource MutedBrush}"/>
+                                            <TextBlock x:Name="LicenseStatus" Grid.Column="1" Text="🟢 Free" Foreground="{StaticResource GoodBrush}" FontWeight="Bold" FontSize="14"/>
+                                        </Grid>
+                                        <TextBlock x:Name="LicenseExpiry" Text="" Foreground="{StaticResource MutedBrush}" FontSize="11" Margin="0,4,0,0"/>
+                                        <TextBlock Text="🟢 Free — базовая очистка (временные файлы, корзина, кэш браузеров)." Foreground="White" TextWrapping="Wrap" Margin="0,10,0,0"/>
+                                        <TextBlock Text="🟡 Pro — глубокая очистка, анализ диска, автозагрузка, предпросмотр, кэш Discord/Steam/Telegram." Foreground="White" TextWrapping="Wrap" Margin="0,4,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                                <Border Background="#12120B" CornerRadius="10" BorderBrush="#33331A" BorderThickness="1" Padding="16" Margin="0,0,0,8">
+                                    <StackPanel>
+                                        <TextBlock Text="ID этого ПК (для привязки ключа):" Foreground="{StaticResource MutedBrush}" FontSize="11"/>
+                                        <Grid Margin="0,6,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBox x:Name="HwidBox" Grid.Column="0" IsReadOnly="True" Margin="0,0,8,0"/>
+                                            <Button Grid.Column="1" Content="Копировать" Classes="ghost" Click="HwidCopy_Click"/>
+                                        </Grid>
+                                        <TextBlock Text="Вставь Pro-ключ из бота:" Foreground="{StaticResource MutedBrush}" FontSize="11" Margin="0,12,0,0"/>
+                                        <TextBox x:Name="LicenseKeyBox" Margin="0,6,0,0" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="70"/>
+                                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0" Spacing="8">
+                                            <Button Content="✨ Активировать Pro" Classes="accent" Click="LicenseActivate_Click"/>
+                                            <Button Content="Убрать ключ" Classes="ghost" Click="LicenseRemove_Click"/>
+                                        </StackPanel>
+                                        <TextBlock x:Name="LicenseMsg" Text="" TextWrapping="Wrap" Margin="0,8,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                                <TextBlock Text="© 2026 SQV. Все права защищены. Копирование и перепродажа запрещены." Foreground="{StaticResource MutedBrush}" FontSize="10" HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                            </StackPanel>
+                            </ScrollViewer>
+                        </Grid>
+
+                    </Grid>
+                </Border>
+            </Grid>
+            <TextBlock Grid.Row="1" Text="Windows • Linux • macOS — одна программа" Foreground="#4a4a40" FontSize="10" HorizontalAlignment="Center" Margin="0,0,0,6"/>
+        </Grid>
+    </Border>
+</Window>
