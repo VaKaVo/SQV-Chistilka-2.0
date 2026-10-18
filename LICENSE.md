@@ -1,8 +1,11 @@
 END USER LICENSE AGREEMENT (EULA)
+
 Software Product “SQV Chistilka 2”
+
 Copyright Holder: SQV, 2026. All rights reserved.
 
 By installing and using this software, you accept the terms of this agreement.
+
 If you do not agree, do not install the program and delete its files.
 
 1. SUBJECT MATTER OF THE AGREEMENT
@@ -53,4 +56,5 @@ If you do not agree, do not install the program and delete its files.
      and prompt you to install them.
 
 If you violate this agreement, your license will be revoked without a refund.
+
 For questions: contact the developer via the SQV Telegram bot.
